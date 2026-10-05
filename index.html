@@ -1,0 +1,823 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pathway</title>
+  <meta name="description" content="Pathway connects high school students with local businesses for real-world career experience. Class prototype.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700;12..96,800&family=Public+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500&display=swap">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<!-- ============================================================
+     ICONS
+     Each icon is drawn once here and reused with <use href="#i-name">.
+     ============================================================ -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></symbol>
+    <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></symbol>
+    <symbol id="i-close" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></symbol>
+    <symbol id="i-student" viewBox="0 0 24 24"><path d="M2 9l10-5 10 5-10 5z"/><path d="M6 11v5c0 1.5 2.7 3 6 3s6-1.5 6-3v-5"/><path d="M22 9v6"/></symbol>
+    <symbol id="i-building" viewBox="0 0 24 24"><rect x="4" y="3" width="16" height="18" rx="1"/><path d="M9 7h2M13 7h2M9 11h2M13 11h2M9 15h2M13 15h2M10 21v-3h4v3"/></symbol>
+    <symbol id="i-people" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c.5-3.5 3.2-5.5 6.5-5.5s6 2 6.5 5.5"/><circle cx="17" cy="9" r="2.5"/><path d="M16 14.6c2.8.2 4.9 2 5.4 5.4"/></symbol>
+    <symbol id="i-mail" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3.5 6.5L12 13l8.5-6.5"/></symbol>
+    <symbol id="i-compass" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M15.5 8.5l-2 5-5 2 2-5z"/></symbol>
+    <symbol id="i-target" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.5"/></symbol>
+    <symbol id="i-briefcase" viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M9 7V5a1 1 0 011-1h4a1 1 0 011 1v2M3 13h18"/></symbol>
+    <symbol id="i-flag" viewBox="0 0 24 24"><path d="M5 21V4M5 4h11l-2 4 2 4H5"/></symbol>
+    <symbol id="i-health" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="4"/><path d="M12 8v8M8 12h8"/></symbol>
+    <symbol id="i-cog" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3.5"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9L7 7M17 17l2.1 2.1M4.9 19.1L7 17M17 7l2.1-2.1"/></symbol>
+    <symbol id="i-code" viewBox="0 0 24 24"><path d="M8 8l-4 4 4 4M16 8l4 4-4 4M13.5 5l-3 14"/></symbol>
+    <symbol id="i-megaphone" viewBox="0 0 24 24"><path d="M3 10v4h3l7 4V6l-7 4z"/><path d="M16.5 9a4 4 0 010 6M19 6.5a7.5 7.5 0 010 11"/></symbol>
+    <symbol id="i-chart" viewBox="0 0 24 24"><path d="M4 4v16h16"/><path d="M8 15l4-5 3 3 5-6"/></symbol>
+    <symbol id="i-factory" viewBox="0 0 24 24"><path d="M3 21V10l5 3v-3l5 3v-3l5 3V4h3v17z"/></symbol>
+    <symbol id="i-data" viewBox="0 0 24 24"><path d="M4 20h16"/><rect x="5" y="11" width="3" height="6"/><rect x="10.5" y="7" width="3" height="10"/><rect x="16" y="4" width="3" height="13"/></symbol>
+    <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></symbol>
+    <symbol id="i-spark" viewBox="0 0 24 24"><path d="M12 3v4M12 17v4M3 12h4M17 12h4M6 6l2.5 2.5M15.5 15.5L18 18M6 18l2.5-2.5M15.5 8.5L18 6"/></symbol>
+    <symbol id="i-chat" viewBox="0 0 24 24"><path d="M4 5h16v11H9l-5 4z"/></symbol>
+    <symbol id="i-wrench" viewBox="0 0 24 24"><path d="M15 4a5 5 0 00-4.6 6.9L4 17.3V20h2.7l6.4-6.4A5 5 0 0020 9l-3 1-2-2 1-3z"/></symbol>
+    <symbol id="i-bulb" viewBox="0 0 24 24"><path d="M9 18h6M10 21h4"/><path d="M12 3a6 6 0 00-3.5 10.9V16h7v-2.1A6 6 0 0012 3z"/></symbol>
+    <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 3l8 3v6c0 4.5-3.4 8-8 9-4.6-1-8-4.5-8-9V6z"/><path d="M8.5 12l2.5 2.5 4.5-5"/></symbol>
+    <symbol id="i-quote" viewBox="0 0 24 24"><path d="M7 7h4v4c0 3-1.5 5-4 6M14 7h4v4c0 3-1.5 5-4 6"/></symbol>
+    <symbol id="i-pin" viewBox="0 0 24 24"><path d="M12 21s7-6.2 7-12a7 7 0 00-14 0c0 5.8 7 12 7 12z"/><circle cx="12" cy="9" r="2.5"/></symbol>
+  </defs>
+</svg>
+
+<!-- ============================================================
+     PROTOTYPE NOTICE (top strip)
+     ============================================================ -->
+<div class="proto-bar">
+  <div class="container proto-bar__inner">
+    <span class="tag tag--accent">Prototype</span>
+    <span>Class project concept. Businesses, testimonials, and statistics on this site are fictional examples.</span>
+  </div>
+</div>
+
+<!-- ============================================================
+     HEADER + NAVIGATION
+     ============================================================ -->
+<header class="site-header">
+  <div class="container site-header__inner">
+    <a href="#home" class="logo" aria-label="Pathway home">
+      <svg class="logo__mark" viewBox="0 0 32 32" aria-hidden="true">
+        <rect width="32" height="32" rx="8" class="logo__bg"/>
+        <path d="M8 24c0-6 8-5 8-11s8-5 8-5" class="logo__path"/>
+        <circle cx="8" cy="24" r="2.6" class="logo__dot"/>
+        <circle cx="24" cy="8" r="2.6" class="logo__dot logo__dot--end"/>
+      </svg>
+      <span class="logo__word">Pathway</span>
+    </a>
+
+    <button class="menu-toggle" id="menuToggle" aria-expanded="false" aria-controls="mainNav" aria-label="Open menu">
+      <svg class="icon"><use href="#i-menu"/></svg>
+    </button>
+
+    <nav class="main-nav" id="mainNav" aria-label="Main">
+      <a href="#home" data-nav="home">Home</a>
+      <a href="#how" data-nav="how">How It Works</a>
+      <a href="#students" data-nav="students">For Students</a>
+      <a href="#businesses" data-nav="businesses">For Businesses</a>
+      <a href="#about" data-nav="about">About Us</a>
+      <a href="#contact" data-nav="contact">Contact</a>
+      <a href="#assessment" class="btn btn--accent btn--sm main-nav__cta">Take the Assessment</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+
+<!-- ============================================================
+     PAGE: HOME
+     ============================================================ -->
+<div class="page" data-page="home">
+
+  <!-- HERO -->
+  <section class="hero">
+    <svg class="hero__route" viewBox="0 0 1200 520" preserveAspectRatio="none" aria-hidden="true">
+      <path d="M-20 470 C 220 470, 260 300, 470 320 S 760 430, 860 260 S 1080 90, 1240 120"/>
+      <circle cx="470" cy="320" r="7"/>
+      <circle cx="860" cy="260" r="7"/>
+    </svg>
+    <div class="container hero__grid">
+      <div class="hero__copy">
+        <p class="eyebrow eyebrow--light">Career exploration for high school students</p>
+        <h1>Try a career before you choose one.</h1>
+        <p class="hero__lede">Pathway helps high school students discover their strengths, then connects them with local businesses for job shadowing, internships, and short-term work experiences. Real experience, before college or the workforce.</p>
+        <div class="btn-row">
+          <a href="#assessment" class="btn btn--accent btn--lg">Find Your Career Path <svg class="icon"><use href="#i-arrow"/></svg></a>
+          <a href="#how" class="btn btn--ghost-light btn--lg">Learn More</a>
+        </div>
+      </div>
+
+      <!-- Product preview card: shows what a student's match could look like -->
+      <aside class="preview" aria-label="Example of a student match">
+        <div class="preview__head">
+          <span class="preview__label">Sample match</span>
+          <span class="tag tag--muted">Example</span>
+        </div>
+        <p class="preview__kicker">Top strengths</p>
+        <ul class="chips">
+          <li class="chip"><svg class="icon"><use href="#i-chart"/></svg>Analytical</li>
+          <li class="chip"><svg class="icon"><use href="#i-bulb"/></svg>Problem Solving</li>
+          <li class="chip"><svg class="icon"><use href="#i-code"/></svg>Technology</li>
+        </ul>
+        <div class="preview__match">
+          <div class="preview__icon"><svg class="icon"><use href="#i-cog"/></svg></div>
+          <div>
+            <p class="preview__biz">Keystone Engineering Group</p>
+            <p class="preview__meta">Job shadow · 3 days · 4 mi away</p>
+          </div>
+          <span class="pill pill--strong">Strong match</span>
+        </div>
+        <div class="preview__match">
+          <div class="preview__icon"><svg class="icon"><use href="#i-code"/></svg></div>
+          <div>
+            <p class="preview__biz">Brightline Software</p>
+            <p class="preview__meta">Internship · 6 weeks · 7 mi away</p>
+          </div>
+          <span class="pill">Good match</span>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <!-- QUICK LINKS ("How can we help?") -->
+  <section class="container help" aria-label="Choose your path">
+    <a href="#students" class="help__tile">
+      <span class="help__icon"><svg class="icon"><use href="#i-student"/></svg></span>
+      <span class="help__title">I'm a student</span>
+      <span class="help__text">Find your strengths and get matched.</span>
+      <svg class="icon help__arrow"><use href="#i-arrow"/></svg>
+    </a>
+    <a href="#businesses" class="help__tile">
+      <span class="help__icon"><svg class="icon"><use href="#i-building"/></svg></span>
+      <span class="help__title">I'm a business</span>
+      <span class="help__text">Host students and build your future workforce.</span>
+      <svg class="icon help__arrow"><use href="#i-arrow"/></svg>
+    </a>
+    <a href="#about" class="help__tile">
+      <span class="help__icon"><svg class="icon"><use href="#i-people"/></svg></span>
+      <span class="help__title">I'm a parent or school</span>
+      <span class="help__text">See how Pathway supports students.</span>
+      <svg class="icon help__arrow"><use href="#i-arrow"/></svg>
+    </a>
+    <a href="#contact" class="help__tile">
+      <span class="help__icon"><svg class="icon"><use href="#i-mail"/></svg></span>
+      <span class="help__title">Contact us</span>
+      <span class="help__text">Questions, ideas, or partnerships.</span>
+      <svg class="icon help__arrow"><use href="#i-arrow"/></svg>
+    </a>
+  </section>
+
+  <!-- MISSION -->
+  <section class="section">
+    <div class="container mission">
+      <div>
+        <p class="eyebrow">Our mission</p>
+        <h2 class="mission__statement">Help every high school student make an informed career decision by understanding their strengths and getting real-world experience first.</h2>
+      </div>
+      <div class="mission__body">
+        <p>Most students choose a college major or first job based on a guess. Pathway replaces the guess with two things: a clear picture of what they're good at, and a chance to see a career up close at a business in their own community.</p>
+        <ul class="checklist">
+          <li><svg class="icon"><use href="#i-check"/></svg>Know your strengths, interests, and skills</li>
+          <li><svg class="icon"><use href="#i-check"/></svg>Get matched with local businesses</li>
+          <li><svg class="icon"><use href="#i-check"/></svg>Gain hands-on experience before you commit</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <section class="section section--tint" id="how">
+    <div class="container">
+      <div class="section-head">
+        <p class="eyebrow">How it works</p>
+        <h2>Four steps from "I'm not sure" to "I've tried it."</h2>
+      </div>
+      <ol class="steps">
+        <li class="step">
+          <span class="step__num">1</span>
+          <span class="step__icon"><svg class="icon"><use href="#i-compass"/></svg></span>
+          <h3>Discover Yourself</h3>
+          <p>Complete a short career and personality assessment that identifies your strengths, interests, and skills.</p>
+        </li>
+        <li class="step">
+          <span class="step__num">2</span>
+          <span class="step__icon"><svg class="icon"><use href="#i-target"/></svg></span>
+          <h3>Find Your Match</h3>
+          <p>Pathway analyzes your results and interests to suggest career fields and local businesses that may be a good fit.</p>
+        </li>
+        <li class="step">
+          <span class="step__num">3</span>
+          <span class="step__icon"><svg class="icon"><use href="#i-briefcase"/></svg></span>
+          <h3>Gain Experience</h3>
+          <p>Join an internship, job-shadowing day, or short-term work experience with a participating business.</p>
+        </li>
+        <li class="step">
+          <span class="step__num">4</span>
+          <span class="step__icon"><svg class="icon"><use href="#i-flag"/></svg></span>
+          <h3>Discover Your Future</h3>
+          <p>Use what you learned to make better decisions about college, training, or employment.</p>
+        </li>
+      </ol>
+      <div class="center-row">
+        <a href="#assessment" class="btn btn--primary">Try the sample assessment <svg class="icon"><use href="#i-arrow"/></svg></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- PARTNER BUSINESSES (cards are filled in by script.js) -->
+  <section class="section" id="partners">
+    <div class="container">
+      <div class="section-head section-head--split">
+        <div>
+          <p class="eyebrow">Example partners</p>
+          <h2>Local businesses students could be matched with</h2>
+        </div>
+        <p class="note-box"><svg class="icon"><use href="#i-shield"/></svg>These are fictional businesses created for the prototype. No real partnerships exist yet.</p>
+      </div>
+      <div class="biz-grid" id="bizGrid"></div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS -->
+  <section class="section section--tint">
+    <div class="container">
+      <div class="section-head section-head--split">
+        <div>
+          <p class="eyebrow">Student stories</p>
+          <h2>What students could say after Pathway</h2>
+        </div>
+        <p class="note-box"><svg class="icon"><use href="#i-shield"/></svg>Sample testimonials written for this prototype. These are not real students.</p>
+      </div>
+      <div class="quotes">
+        <figure class="quote">
+          <span class="tag tag--muted">Sample testimonial</span>
+          <svg class="icon quote__mark"><use href="#i-quote"/></svg>
+          <blockquote>I thought I wanted to study business, but after working with a local engineering company, I realized I really enjoy problem-solving and technology.</blockquote>
+          <figcaption><span class="avatar">S1</span><span><strong>Example Student A</strong><br>Grade 11 · Engineering job shadow</span></figcaption>
+        </figure>
+        <figure class="quote">
+          <span class="tag tag--muted">Sample testimonial</span>
+          <svg class="icon quote__mark"><use href="#i-quote"/></svg>
+          <blockquote>Shadowing nurses for a week showed me what the job is really like. I'm now taking anatomy next year because I know this is what I want.</blockquote>
+          <figcaption><span class="avatar">S2</span><span><strong>Example Student B</strong><br>Grade 12 · Healthcare shadow</span></figcaption>
+        </figure>
+        <figure class="quote">
+          <span class="tag tag--muted">Sample testimonial</span>
+          <svg class="icon quote__mark"><use href="#i-quote"/></svg>
+          <blockquote>The assessment said I was strong in creativity and communication. My internship at a marketing agency proved it. I ran a real social media post.</blockquote>
+          <figcaption><span class="avatar">S3</span><span><strong>Example Student C</strong><br>Grade 10 · Marketing internship</span></figcaption>
+        </figure>
+        <figure class="quote">
+          <span class="tag tag--muted">Sample testimonial</span>
+          <svg class="icon quote__mark"><use href="#i-quote"/></svg>
+          <blockquote>I didn't want college right away. Two weeks at a manufacturing plant introduced me to an apprenticeship program I didn't know existed.</blockquote>
+          <figcaption><span class="avatar">S4</span><span><strong>Example Student D</strong><br>Grade 12 · Manufacturing experience</span></figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHY IT MATTERS -->
+  <section class="section">
+    <div class="container">
+      <div class="section-head">
+        <p class="eyebrow">Why it matters</p>
+        <h2>Career exploration pays off early</h2>
+        <p class="section-lede">Work-based learning gives students context for the decisions they're about to make. The figures below show the kind of data Pathway would track and report.</p>
+      </div>
+      <div class="stats">
+        <div class="stat">
+          <span class="tag tag--warn">Placeholder</span>
+          <p class="stat__num">XX%</p>
+          <p class="stat__label">of college students change their major at least once</p>
+        </div>
+        <div class="stat">
+          <span class="tag tag--warn">Placeholder</span>
+          <p class="stat__num">X in X</p>
+          <p class="stat__label">high school students say they feel unprepared to choose a career</p>
+        </div>
+        <div class="stat">
+          <span class="tag tag--warn">Placeholder</span>
+          <p class="stat__num">XX%</p>
+          <p class="stat__label">of students who complete work-based learning report clearer career goals</p>
+        </div>
+        <div class="stat">
+          <span class="tag tag--warn">Placeholder</span>
+          <p class="stat__num">XX%</p>
+          <p class="stat__label">of employers say early talent programs help future hiring</p>
+        </div>
+      </div>
+      <p class="fineprint">Statistics are placeholders for the prototype. Replace each one with a figure from a verified source (for example, the National Center for Education Statistics or U.S. Department of Education) and cite it before presenting.</p>
+    </div>
+  </section>
+
+  <!-- DUAL CALL TO ACTION -->
+  <section class="section section--tight">
+    <div class="container cta-pair">
+      <div class="cta-panel cta-panel--brand">
+        <svg class="icon cta-panel__icon"><use href="#i-student"/></svg>
+        <h2>For students</h2>
+        <p>Take a 10-question sample assessment and see which careers and local opportunities fit you.</p>
+        <a href="#assessment" class="btn btn--accent">Discover Your Career Path <svg class="icon"><use href="#i-arrow"/></svg></a>
+      </div>
+      <div class="cta-panel cta-panel--accent">
+        <svg class="icon cta-panel__icon"><use href="#i-building"/></svg>
+        <h2>For businesses</h2>
+        <p>Host a job shadow, internship, or short project and meet motivated students in your community.</p>
+        <button type="button" class="btn btn--dark" data-open-partner>Become a Partner <svg class="icon"><use href="#i-arrow"/></svg></button>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ============================================================
+     PAGE: FOR STUDENTS
+     ============================================================ -->
+<div class="page" data-page="students" hidden>
+  <section class="page-hero">
+    <div class="container">
+      <p class="crumbs"><a href="#home">Home</a> / For Students</p>
+      <h1>Find out what you're good at. Then go try it.</h1>
+      <p class="page-hero__lede">Pathway is free for students in this concept. Take the assessment, review your matches, and choose an experience that fits your schedule.</p>
+      <a href="#assessment" class="btn btn--accent btn--lg">Begin the Sample Assessment <svg class="icon"><use href="#i-arrow"/></svg></a>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container split">
+      <div>
+        <p class="eyebrow">The assessment</p>
+        <h2>How the assessment works</h2>
+        <p>You answer 10 everyday scenarios, like how you'd handle a group project or what you'd do with a free period. Each answer adds points to eight strength areas. There are no wrong answers.</p>
+        <p class="fineprint">The assessment is inspired by career-interest tools such as the ASVAB Career Exploration Program, but it is <strong>not</strong> the ASVAB, and Pathway is not affiliated with the U.S. military or Department of Defense. This prototype is not scientifically validated.</p>
+      </div>
+      <ul class="trait-grid" id="traitGrid" aria-label="The eight strength areas"></ul>
+    </div>
+  </section>
+
+  <section class="section section--tint">
+    <div class="container">
+      <div class="section-head">
+        <p class="eyebrow">Matching</p>
+        <h2>How you're matched with opportunities</h2>
+      </div>
+      <div class="card-row">
+        <div class="card">
+          <span class="card__icon"><svg class="icon"><use href="#i-chart"/></svg></span>
+          <h3>1. We score your strengths</h3>
+          <p>Your answers become a profile across eight areas, from analytical thinking to working with your hands.</p>
+        </div>
+        <div class="card">
+          <span class="card__icon"><svg class="icon"><use href="#i-compass"/></svg></span>
+          <h3>2. We suggest career areas</h3>
+          <p>Each career area relies on certain strengths. We rank the fields that line up with your top results.</p>
+        </div>
+        <div class="card">
+          <span class="card__icon"><svg class="icon"><use href="#i-pin"/></svg></span>
+          <h3>3. We find local businesses</h3>
+          <p>Partner businesses list opportunities by career area. You see the ones near you that match your top fields.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container split">
+      <div>
+        <p class="eyebrow">What you gain</p>
+        <h2>More than a line on your resume</h2>
+        <p>Short experiences help you rule careers in or out before you spend time and money on them.</p>
+        <a href="#assessment" class="btn btn--primary">Begin the Sample Assessment <svg class="icon"><use href="#i-arrow"/></svg></a>
+      </div>
+      <ul class="gain-list">
+        <li><svg class="icon"><use href="#i-check"/></svg><div><strong>Clarity</strong><span>See what a job is really like day to day.</span></div></li>
+        <li><svg class="icon"><use href="#i-check"/></svg><div><strong>Skills</strong><span>Practice teamwork, communication, and job-specific tasks.</span></div></li>
+        <li><svg class="icon"><use href="#i-check"/></svg><div><strong>Connections</strong><span>Meet professionals who can mentor you or write a reference.</span></div></li>
+        <li><svg class="icon"><use href="#i-check"/></svg><div><strong>Confidence</strong><span>Choose a major, training program, or job with real evidence.</span></div></li>
+        <li><svg class="icon"><use href="#i-check"/></svg><div><strong>Applications</strong><span>Write about real experience in college and job applications.</span></div></li>
+      </ul>
+    </div>
+  </section>
+</div>
+
+<!-- ============================================================
+     PAGE: FOR BUSINESSES
+     ============================================================ -->
+<div class="page" data-page="businesses" hidden>
+  <section class="page-hero">
+    <div class="container">
+      <p class="crumbs"><a href="#home">Home</a> / For Businesses</p>
+      <h1>Meet your future workforce while they're still deciding.</h1>
+      <p class="page-hero__lede">Host high school students for a day, a few weeks, or a single project. Pathway handles matching so you meet students who are already interested in your field.</p>
+      <button type="button" class="btn btn--accent btn--lg" data-open-partner>Become a Partner <svg class="icon"><use href="#i-arrow"/></svg></button>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="section-head">
+        <p class="eyebrow">Why participate</p>
+        <h2>Why businesses partner with Pathway</h2>
+      </div>
+      <div class="card-row card-row--4">
+        <div class="card"><span class="card__icon"><svg class="icon"><use href="#i-people"/></svg></span><h3>Build a talent pipeline</h3><p>Introduce students to your industry years before they apply for jobs.</p></div>
+        <div class="card"><span class="card__icon"><svg class="icon"><use href="#i-target"/></svg></span><h3>Get pre-matched students</h3><p>Students arrive with a strengths profile that fits the work you do.</p></div>
+        <div class="card"><span class="card__icon"><svg class="icon"><use href="#i-pin"/></svg></span><h3>Invest locally</h3><p>Show your community that you support local schools and young people.</p></div>
+        <div class="card"><span class="card__icon"><svg class="icon"><use href="#i-spark"/></svg></span><h3>Fresh perspectives</h3><p>Students bring new ideas, especially on technology and social media.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--tint">
+    <div class="container">
+      <div class="section-head">
+        <p class="eyebrow">Ways to host</p>
+        <h2>Choose the experience that fits your team</h2>
+      </div>
+      <div class="card-row">
+        <div class="card card--format">
+          <p class="format__time"><svg class="icon"><use href="#i-clock"/></svg>1–3 days</p>
+          <h3>Job shadowing</h3>
+          <p>A student follows an employee through a normal workday and asks questions. Lowest time commitment.</p>
+        </div>
+        <div class="card card--format">
+          <p class="format__time"><svg class="icon"><use href="#i-clock"/></svg>4–8 weeks</p>
+          <h3>Internship</h3>
+          <p>Part-time, supervised work on real tasks. Can be paid, unpaid, or for school credit depending on local rules.</p>
+        </div>
+        <div class="card card--format">
+          <p class="format__time"><svg class="icon"><use href="#i-clock"/></svg>1–2 weeks</p>
+          <h3>Short-term project</h3>
+          <p>A student or small team works on a defined project, like a marketing plan or process review, and presents results.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container split">
+      <div>
+        <p class="eyebrow">Getting started</p>
+        <h2>How partnering works</h2>
+        <p>We keep setup simple so a small business can take part without a dedicated HR team.</p>
+        <button type="button" class="btn btn--primary" data-open-partner>Become a Partner <svg class="icon"><use href="#i-arrow"/></svg></button>
+      </div>
+      <ol class="mini-steps">
+        <li><strong>Apply</strong><span>Tell us about your business and the experiences you can offer.</span></li>
+        <li><strong>Set up your listing</strong><span>Choose formats, dates, and how many students you can host.</span></li>
+        <li><strong>Review matches</strong><span>See interested students and their strengths profiles, then confirm.</span></li>
+        <li><strong>Host and give feedback</strong><span>Share a short evaluation that helps the student reflect on their experience.</span></li>
+      </ol>
+    </div>
+  </section>
+</div>
+
+<!-- ============================================================
+     PAGE: ABOUT US
+     ============================================================ -->
+<div class="page" data-page="about" hidden>
+  <section class="page-hero">
+    <div class="container">
+      <p class="crumbs"><a href="#home">Home</a> / About Us</p>
+      <h1>We're closing the gap between school and career.</h1>
+      <p class="page-hero__lede">Pathway is a student-led business concept built for an Entrepreneurship class.</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container about-grid">
+      <article class="about-block">
+        <p class="eyebrow">The problem</p>
+        <h2>Students choose careers without seeing them</h2>
+        <p>High school students are asked to pick a college major, a training program, or a job with very little real exposure to the work. Many choose based on what they've heard, then change direction later, which costs time and tuition. Local businesses, meanwhile, struggle to connect with young people who might become future employees.</p>
+      </article>
+      <article class="about-block">
+        <p class="eyebrow">Mission</p>
+        <h2>Informed decisions through real experience</h2>
+        <p>Our mission is to help high school students make more informed career decisions by helping them understand their strengths and giving them opportunities to gain real-world experience.</p>
+      </article>
+      <article class="about-block">
+        <p class="eyebrow">Vision</p>
+        <h2>Every student tries a career before choosing one</h2>
+        <p>We picture a future where every high school graduate has completed at least one hands-on experience in a field they're considering, through businesses in their own community.</p>
+      </article>
+      <article class="about-block">
+        <p class="eyebrow">Why early exploration matters</p>
+        <h2>The earlier, the cheaper the lesson</h2>
+        <p>Learning that a career isn't a fit during a two-day job shadow costs almost nothing. Learning it after two years of college costs much more. Early exploration also helps students pick classes with purpose and gives them a stronger story for applications.</p>
+      </article>
+    </div>
+  </section>
+
+  <section class="section section--tint">
+    <div class="container split">
+      <div>
+        <p class="eyebrow">Our team</p>
+        <h2>Built by students, for students</h2>
+        <p>Add your team members and roles here before presenting.</p>
+      </div>
+      <ul class="team">
+        <li><span class="avatar avatar--lg">?</span><span><strong>[Team member name]</strong><br>Role, e.g. CEO / Strategy</span></li>
+        <li><span class="avatar avatar--lg">?</span><span><strong>[Team member name]</strong><br>Role, e.g. Marketing</span></li>
+        <li><span class="avatar avatar--lg">?</span><span><strong>[Team member name]</strong><br>Role, e.g. Partnerships</span></li>
+        <li><span class="avatar avatar--lg">?</span><span><strong>[Team member name]</strong><br>Role, e.g. Product</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="section section--tight">
+    <div class="container">
+      <p class="note-box note-box--wide"><svg class="icon"><use href="#i-shield"/></svg>Pathway is a class concept and not an operating company. Our assessment is not the ASVAB, and we are not affiliated with the U.S. military, the Department of Defense, or any school district.</p>
+    </div>
+  </section>
+</div>
+
+<!-- ============================================================
+     PAGE: CONTACT
+     ============================================================ -->
+<div class="page" data-page="contact" hidden>
+  <section class="page-hero">
+    <div class="container">
+      <p class="crumbs"><a href="#home">Home</a> / Contact</p>
+      <h1>Get in touch</h1>
+      <p class="page-hero__lede">Students, parents, schools, and businesses: send us a question and we'll point you in the right direction.</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container contact">
+      <div class="form-card">
+        <form id="contactForm" novalidate>
+          <div class="field">
+            <label for="cName">Name</label>
+            <input id="cName" name="name" type="text" autocomplete="name" placeholder="Your full name">
+            <p class="field__error" data-error-for="cName"></p>
+          </div>
+          <div class="field">
+            <label for="cEmail">Email</label>
+            <input id="cEmail" name="email" type="email" autocomplete="email" placeholder="you@example.com">
+            <p class="field__error" data-error-for="cEmail"></p>
+          </div>
+          <div class="field">
+            <label for="cType">I am a…</label>
+            <select id="cType" name="type">
+              <option value="">Select one</option>
+              <option>Student</option>
+              <option>Parent</option>
+              <option>School</option>
+              <option>Business</option>
+            </select>
+            <p class="field__error" data-error-for="cType"></p>
+          </div>
+          <div class="field">
+            <label for="cMessage">Message</label>
+            <textarea id="cMessage" name="message" rows="5" placeholder="How can we help?"></textarea>
+            <p class="field__error" data-error-for="cMessage"></p>
+          </div>
+          <button type="submit" class="btn btn--primary btn--block">Send Message <svg class="icon"><use href="#i-arrow"/></svg></button>
+          <p class="fineprint">Prototype form: messages are not actually sent or stored.</p>
+        </form>
+        <div class="success" id="contactSuccess" hidden>
+          <span class="success__icon"><svg class="icon"><use href="#i-check"/></svg></span>
+          <h2>Message received</h2>
+          <p id="contactSuccessText">Thanks! In the real platform, our team would reply within two business days.</p>
+          <button type="button" class="btn btn--ghost" id="contactReset">Send another message</button>
+        </div>
+      </div>
+
+      <aside class="contact__info">
+        <h2>Other ways to reach us</h2>
+        <ul class="info-list">
+          <li><svg class="icon"><use href="#i-mail"/></svg><div><strong>Email</strong><span>hello@pathway.example</span></div></li>
+          <li><svg class="icon"><use href="#i-pin"/></svg><div><strong>Office</strong><span>[City, State placeholder]</span></div></li>
+          <li><svg class="icon"><use href="#i-clock"/></svg><div><strong>Hours</strong><span>Mon–Fri, 9am–5pm</span></div></li>
+        </ul>
+        <p class="fineprint">Contact details are placeholders for the prototype.</p>
+        <div class="contact__cta">
+          <p><strong>Are you a business?</strong> Skip the form and apply directly.</p>
+          <button type="button" class="btn btn--accent btn--sm" data-open-partner>Become a Partner</button>
+        </div>
+      </aside>
+    </div>
+  </section>
+</div>
+
+<!-- ============================================================
+     PAGE: ASSESSMENT (interactive)
+     ============================================================ -->
+<div class="page" data-page="assessment" hidden>
+  <section class="section assess-wrap">
+    <div class="container">
+
+      <!-- Intro screen -->
+      <div class="assess-card" id="assessIntro">
+        <p class="eyebrow">Sample assessment</p>
+        <h1 class="assess-title">Discover your career path</h1>
+        <p>Answer 10 quick scenarios. Pick the answer that sounds most like you, not what you think sounds best. You'll see your top strengths, suggested career areas, and example local opportunities.</p>
+        <ul class="assess-facts">
+          <li><svg class="icon"><use href="#i-clock"/></svg>About 3 minutes</li>
+          <li><svg class="icon"><use href="#i-check"/></svg>10 questions</li>
+          <li><svg class="icon"><use href="#i-target"/></svg>8 strength areas</li>
+        </ul>
+        <button type="button" class="btn btn--accent btn--lg" id="startAssessment">Start Assessment <svg class="icon"><use href="#i-arrow"/></svg></button>
+        <p class="fineprint">Demonstration only. Inspired by career-interest tools like the ASVAB Career Exploration Program, but this is not the ASVAB, it is not scientifically validated, and Pathway is not affiliated with the U.S. military.</p>
+      </div>
+
+      <!-- Question screen -->
+      <div class="assess-card" id="assessQuiz" hidden>
+        <div class="progress">
+          <div class="progress__meta">
+            <span id="qCounter">Question 1 of 10</span>
+            <span id="qPercent">0%</span>
+          </div>
+          <div class="progress__track"><div class="progress__fill" id="qBar"></div></div>
+        </div>
+        <h2 class="question" id="qText">Question text</h2>
+        <div class="options" id="qOptions" role="radiogroup" aria-labelledby="qText"></div>
+        <div class="assess-nav">
+          <button type="button" class="btn btn--ghost" id="qBack">Back</button>
+          <button type="button" class="btn btn--primary" id="qNext" disabled>Next <svg class="icon"><use href="#i-arrow"/></svg></button>
+        </div>
+      </div>
+
+    </div>
+  </section>
+</div>
+
+<!-- ============================================================
+     PAGE: RESULTS (filled in by script.js)
+     ============================================================ -->
+<div class="page" data-page="results" hidden>
+  <section class="page-hero page-hero--compact">
+    <div class="container">
+      <p class="crumbs"><a href="#home">Home</a> / <a href="#assessment">Assessment</a> / Results</p>
+      <h1>Your sample results</h1>
+      <p class="page-hero__lede" id="resultsLede">Here's what your answers suggest. Use this as a starting point for exploring, not a final answer.</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container results">
+      <div class="note-box note-box--wide" id="exampleNotice" hidden>
+        <svg class="icon"><use href="#i-shield"/></svg>
+        <span>You're viewing an example profile. <a href="#assessment">Take the assessment</a> to see your own results.</span>
+      </div>
+
+      <div class="results__block">
+        <div class="results__head">
+          <h2>Your top strengths</h2>
+        </div>
+        <div class="strengths" id="topStrengths"></div>
+      </div>
+
+      <div class="results__block">
+        <div class="results__head">
+          <h2>Potential career areas</h2>
+        </div>
+        <div class="careers" id="careerList"></div>
+      </div>
+
+      <div class="results__block">
+        <div class="results__head">
+          <h2>Potential opportunities</h2>
+          <span class="tag tag--muted">Fictional example businesses</span>
+        </div>
+        <div class="opps" id="oppList"></div>
+      </div>
+
+      <div class="results__block results__split">
+        <div class="profile-card">
+          <h3>Your full strength profile</h3>
+          <ul class="profile" id="fullProfile"></ul>
+        </div>
+        <div class="next-card">
+          <h3>Next steps</h3>
+          <ol class="mini-steps mini-steps--compact">
+            <li><strong>Talk it over</strong><span>Share your results with a parent, teacher, or school counselor.</span></li>
+            <li><strong>Request an opportunity</strong><span>Pick one experience above that you're curious about.</span></li>
+            <li><strong>Reflect afterward</strong><span>Note what you liked and didn't like, then retake the assessment.</span></li>
+          </ol>
+          <button type="button" class="btn btn--ghost" id="retake">Retake the assessment</button>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+</main>
+
+<!-- ============================================================
+     FOOTER
+     ============================================================ -->
+<footer class="site-footer">
+  <div class="container footer__grid">
+    <div>
+      <a href="#home" class="logo logo--light">
+        <svg class="logo__mark" viewBox="0 0 32 32" aria-hidden="true">
+          <rect width="32" height="32" rx="8" class="logo__bg"/>
+          <path d="M8 24c0-6 8-5 8-11s8-5 8-5" class="logo__path"/>
+          <circle cx="8" cy="24" r="2.6" class="logo__dot"/>
+          <circle cx="24" cy="8" r="2.6" class="logo__dot logo__dot--end"/>
+        </svg>
+        <span class="logo__word">Pathway</span>
+      </a>
+      <p class="footer__tag">Connecting high school students with local businesses for real-world career experience.</p>
+    </div>
+    <nav class="footer__col" aria-label="Footer: Explore">
+      <h3>Explore</h3>
+      <a href="#how">How It Works</a>
+      <a href="#students">For Students</a>
+      <a href="#businesses">For Businesses</a>
+      <a href="#assessment">Sample Assessment</a>
+    </nav>
+    <nav class="footer__col" aria-label="Footer: Company">
+      <h3>Company</h3>
+      <a href="#about">About Us</a>
+      <a href="#partners">Example Partners</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </div>
+  <div class="container footer__legal">
+    <p>© 2026 Pathway. A student business concept created for an Entrepreneurship class. All businesses, testimonials, statistics, and contact details are fictional placeholders. The Pathway assessment is not the ASVAB, and Pathway is not affiliated with the U.S. military or Department of Defense.</p>
+  </div>
+</footer>
+
+<!-- ============================================================
+     BECOME A PARTNER (pop-up form)
+     ============================================================ -->
+<div class="modal" id="partnerModal" hidden>
+  <div class="modal__backdrop" data-close-modal></div>
+  <div class="modal__panel" role="dialog" aria-modal="true" aria-labelledby="partnerTitle">
+    <button type="button" class="modal__close" data-close-modal aria-label="Close">
+      <svg class="icon"><use href="#i-close"/></svg>
+    </button>
+    <form id="partnerForm" novalidate>
+      <p class="eyebrow">For businesses</p>
+      <h2 id="partnerTitle">Become a Partner</h2>
+      <p class="modal__lede">Tell us about your business. We'll follow up to set up your first student experience.</p>
+      <div class="form-grid">
+        <div class="field">
+          <label for="pBiz">Business name</label>
+          <input id="pBiz" type="text" placeholder="Business name">
+          <p class="field__error" data-error-for="pBiz"></p>
+        </div>
+        <div class="field">
+          <label for="pName">Your name</label>
+          <input id="pName" type="text" autocomplete="name" placeholder="Full name">
+          <p class="field__error" data-error-for="pName"></p>
+        </div>
+        <div class="field">
+          <label for="pEmail">Work email</label>
+          <input id="pEmail" type="email" autocomplete="email" placeholder="name@business.com">
+          <p class="field__error" data-error-for="pEmail"></p>
+        </div>
+        <div class="field">
+          <label for="pIndustry">Industry</label>
+          <select id="pIndustry">
+            <option value="">Select one</option>
+            <option>Healthcare</option>
+            <option>Engineering</option>
+            <option>Technology</option>
+            <option>Marketing &amp; Media</option>
+            <option>Finance</option>
+            <option>Manufacturing &amp; Trades</option>
+            <option>Education &amp; Nonprofit</option>
+            <option>Other</option>
+          </select>
+          <p class="field__error" data-error-for="pIndustry"></p>
+        </div>
+      </div>
+      <fieldset class="field">
+        <legend>Experiences you could offer</legend>
+        <div class="check-row">
+          <label class="check"><input type="checkbox" id="pShadow" value="Job shadowing"> Job shadowing</label>
+          <label class="check"><input type="checkbox" id="pIntern" value="Internships"> Internships</label>
+          <label class="check"><input type="checkbox" id="pProject" value="Short-term projects"> Short-term projects</label>
+        </div>
+        <p class="field__error" data-error-for="pTypes"></p>
+      </fieldset>
+      <button type="submit" class="btn btn--accent btn--block">Submit Application</button>
+      <p class="fineprint">Prototype form: nothing is sent or stored.</p>
+    </form>
+    <div class="success" id="partnerSuccess" hidden>
+      <span class="success__icon"><svg class="icon"><use href="#i-check"/></svg></span>
+      <h2>Application received</h2>
+      <p id="partnerSuccessText">Thanks! In the real platform, a partnerships coordinator would contact you within one week.</p>
+      <button type="button" class="btn btn--ghost" data-close-modal>Close</button>
+    </div>
+  </div>
+</div>
+
+<!-- Small pop-up message -->
+<div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+
+<script src="script.js"></script>
+</body>
+</html>
