@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PathWay — Your Effortless Career Route</title>
+
+  <!-- Open Graph / Meta Tags -->
+  <meta property="og:title" content="PathWay — Your Effortless Career Route">
+  <meta property="og:description" content="Real recruiters finding jobs, rewriting ATS resumes, and submitting applications for you.">
+  <meta property="og:image" content="image_af3bc0.jpg">
+  <meta property="og:type" content="website">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <link rel="icon" type="image/jpeg" href="image_af3bc0.jpg">
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    }
+  </style>
+</head>
+<body class="bg-gray-100 text-slate-900 min-h-screen flex flex-col antialiased">
+
+  <!-- TOP BAR -->
+  <header class="bg-white border-b border-slate-300 sticky top-0 z-40">
+    <div class="max-w-5xl mx-auto px-4 h-16 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <img src="image_af3bc0.jpg" alt="PathWay Logo" class="h-9 w-auto object-contain rounded-none border border-slate-200" onerror="this.src='https://via.placeholder.com/150x50?text=PathWay'">
+        <span class="font-bold text-xl tracking-tight text-slate-900 hidden sm:inline">PathWay</span>
+      </div>
+
+      <div class="flex items-center gap-3">
+        <button onclick="promptAdminAccess()" class="text-xs font-semibold px-3 py-1.5 border border-slate-300 text-slate-600 hover:bg-slate-100 transition rounded-none flex items-center gap-1.5">
+          <i data-lucide="lock" class="w-3.5 h-3.5"></i> Admin
+        </button>
+        <a href="#waitlist" class="bg-[#0a66c2] hover:bg-[#084e96] text-white text-sm font-semibold px-4 py-2 transition rounded-none">
+          Join Waitlist
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- ADMIN DASHBOARD MODAL (HIDDEN) -->
+  <div id="adminModal" class="hidden fixed inset-0 bg-slate-900/60 z-50 flex items-center justify-center p-4">
+    <div class="bg-white border-2 border-slate-900 max-w-3xl w-full p-6 shadow-2xl rounded-none relative max-h-[90vh] overflow-y-auto">
+      <button onclick="closeAdminModal()" class="absolute top-4 right-4 text-slate-500 hover:text-slate-900">
+        <i data-lucide="x" class="w-6 h-6"></i>
+      </button>
+
+      <div class="flex items-center gap-2 mb-4 pb-3 border-b border-slate-200">
+        <i data-lucide="shield-check" class="w-6 h-6 text-[#0a66c2]"></i>
+        <h2 class="text-xl font-bold text-slate-900">Private Admin Analytics</h2>
+      </div>
+
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-6">
+        <div class="p-4 bg-slate-50 border border-slate-200">
+          <p class="text-xs text-slate-500 font-semibold uppercase">Total Visits</p>
+          <p id="adminVisits" class="text-2xl font-bold text-slate-900">0</p>
+        </div>
+        <div class="p-4 bg-slate-50 border border-slate-200">
+          <p class="text-xs text-slate-500 font-semibold uppercase">IG Referrals</p>
+          <p id="adminIgVisits" class="text-2xl font-bold text-[#0a66c2]">0</p>
+        </div>
+        <div class="p-4 bg-slate-50 border border-slate-200">
+          <p class="text-xs text-slate-500 font-semibold uppercase">Waitlist Leads</p>
+          <p id="adminLeads" class="text-2xl font-bold text-emerald-600">0</p>
+        </div>
+        <div class="p-4 bg-slate-50 border border-slate-200">
+          <p class="text-xs text-slate-500 font-semibold uppercase">Conversion %</p>
+          <p id="adminConv" class="text-2xl font-bold text-slate-900">0%</p>
+        </div>
+      </div>
+
+      <h3 class="font-bold text-slate-800 mb-2">Captured Emails</h3>
+      <div id="emailList" class="p-3 bg-slate-50 border border-slate-200 text-xs font-mono max-h-40 overflow-y-auto mb-4">
+        No emails collected yet.
+      </div>
+
+      <div class="flex justify-end gap-3">
+        <button onclick="exportEmailsCSV()" class="bg-slate-900 text-white text-xs font-semibold px-4 py-2 rounded-none hover:bg-slate-800">
+          Export CSV
+        </button>
+        <button onclick="closeAdminModal()" class="border border-slate-300 text-slate-700 text-xs font-semibold px-4 py-2 rounded-none hover:bg-slate-100">
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- WELCOME POPUP MODAL -->
+  <div id="welcomePopup" class="fixed inset-0 bg-slate-900/50 z-50 flex items-center justify-center p-4">
+    <div class="bg-white border border-slate-300 max-w-md w-full p-6 shadow-xl rounded-none relative">
+      <button onclick="closeWelcomePopup()" class="absolute top-3 right-3 text-slate-400 hover:text-slate-700">
+        <i data-lucide="x" class="w-5 h-5"></i>
+      </button>
+
+      <div class="text-center mb-4">
+        <img src="image_af3bc0.jpg" alt="PathWay Logo" class="h-10 mx-auto mb-3 object-contain" onerror="this.src='https://via.placeholder.com/150x50?text=PathWay'">
+        <h3 class="text-xl font-bold text-slate-900">PathWay Launching Soon!</h3>
+        <p class="text-sm text-slate-600 mt-1">Join waitlist and we'll notify you when it is ready.</p>
+      </div>
+
+      <form onsubmit="handleWaitlistSubmit(event, 'popup')" class="space-y-3">
+        <input type="email" required placeholder="Enter your email address" class="w-full px-3 py-2.5 border border-slate-300 text-sm focus:outline-none focus:border-[#0a66c2] rounded-none">
+        <button type="submit" class="w-full bg-[#0a66c2] hover:bg-[#084e96] text-white font-semibold py-2.5 text-sm transition rounded-none">
+          Join Waitlist
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- HERO SECTION -->
+  <section class="bg-white border-b border-slate-300 py-12 px-4">
+    <div class="max-w-4xl mx-auto text-center">
+      <span class="inline-block bg-blue-50 text-[#0a66c2] text-xs font-bold px-3 py-1 uppercase tracking-wider mb-4 border border-blue-200 rounded-none">
+        Your Effortless Career Route
+      </span>
+      <h1 class="text-3xl sm:text-5xl font-extrabold text-slate-900 tracking-tight leading-tight mb-4">
+        Stop Wasting Hours Applying.<br class="hidden sm:block"> Let Real Humans Land Your Next Job.
+      </h1>
+      <p class="text-slate-600 text-base sm:text-lg max-w-2xl mx-auto mb-8">
+        We pair you with a dedicated recruiter who finds matching roles, tailors your ATS resumes, and handles applications end-to-end.
+      </p>
+
+      <!-- HERO WAITLIST FORM -->
+      <div id="waitlist" class="max-w-md mx-auto bg-slate-50 border border-slate-300 p-4 shadow-sm rounded-none">
+        <h2 class="text-sm font-bold text-slate-800 mb-2">Join waitlist and we'll notify you when it is ready.</h2>
+        <form onsubmit="handleWaitlistSubmit(event, 'hero')" class="flex flex-col sm:flex-row gap-2">
+          <input type="email" required placeholder="Enter your email" class="flex-1 px-3 py-2.5 border border-slate-300 text-sm focus:outline-none focus:border-[#0a66c2] rounded-none bg-white">
+          <button type="submit" class="bg-[#0a66c2] hover:bg-[#084e96] text-white font-semibold px-5 py-2.5 text-sm transition rounded-none whitespace-nowrap">
+            Join Waitlist
+          </button>
+        </form>
+        <p id="formFeedback" class="hidden text-xs text-emerald-600 font-semibold mt-2">
+          ✓ You're on the waitlist! We'll reach out as soon as spots open.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SINGLE PACKAGE PRICING -->
+  <section class="py-12 px-4 max-w-4xl mx-auto">
+    <div class="text-center mb-8">
+      <h2 class="text-2xl font-bold text-slate-900">Simple, Full-Service Plan</h2>
+      <p class="text-slate-600 text-sm mt-1">One comprehensive package with real recruiters handling everything for you.</p>
+    </div>
+
+    <div class="bg-white border-2 border-[#0a66c2] shadow-md p-6 sm:p-8 rounded-none relative">
+      <div class="absolute -top-3 right-6 bg-[#0a66c2] text-white text-xs font-bold px-3 py-0.5 uppercase tracking-wide rounded-none">
+        All-Inclusive
+      </div>
+
+      <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center border-b border-slate-200 pb-6 mb-6">
+        <div>
+          <h3 class="text-2xl font-bold text-slate-900">1-Month Full Recruiter Search</h3>
+          <p class="text-slate-600 text-sm mt-1">Real people doing the heavy lifting of finding jobs & tailoring applications.</p>
+        </div>
+        <div class="mt-4 sm:mt-0 text-left sm:text-right">
+          <span class="text-4xl font-extrabold text-slate-900">$250</span>
+          <span class="text-slate-500 text-sm"> / month</span>
+        </div>
+      </div>
+
+      <div class="grid sm:grid-cols-2 gap-4 mb-8">
+        <div class="flex items-start gap-3">
+          <i data-lucide="check-circle-2" class="w-5 h-5 text-[#0a66c2] shrink-0 mt-0.5"></i>
+          <p class="text-sm text-slate-700"><strong>Real People Doing the Work:</strong> Dedicated talent partners finding jobs for you daily.</p>
+        </div>
+        <div class="flex items-start gap-3">
+          <i data-lucide="check-circle-2" class="w-5 h-5 text-[#0a66c2] shrink-0 mt-0.5"></i>
+          <p class="text-sm text-slate-700"><strong>ATS Checker Resume Optimization:</strong> Editing & tailoring resumes for every application.</p>
+        </div>
+        <div class="flex items-start gap-3">
+          <i data-lucide="check-circle-2" class="w-5 h-5 text-[#0a66c2] shrink-0 mt-0.5"></i>
+          <p class="text-sm text-slate-700"><strong>Direct Recruiter Meetings:</strong> 1-on-1 strategy sessions and weekly search updates.</p>
+        </div>
+        <div class="flex items-start gap-3">
+          <i data-lucide="check-circle-2" class="w-5 h-5 text-[#0a66c2] shrink-0 mt-0.5"></i>
+          <p class="text-sm text-slate-700"><strong>Personalized Search Tailoring:</strong> Custom filters based on your salary, title, and location goals.</p>
+        </div>
+      </div>
+
+      <a href="#waitlist" class="block w-full text-center bg-[#0a66c2] hover:bg-[#084e96] text-white font-bold py-3 text-base transition rounded-none">
+        Get Started — Join Waitlist
+      </a>
+    </div>
+  </section>
+
+  <!-- REVIEWS SECTION -->
+  <section class="bg-white border-t border-b border-slate-300 py-12 px-4">
+    <div class="max-w-4xl mx-auto">
+      <h2 class="text-2xl font-bold text-center text-slate-900 mb-8">What Job Seekers Are Saying</h2>
+
+      <div class="grid md:grid-cols-2 gap-6">
+        <div class="p-5 border border-slate-200 bg-slate-50 rounded-none">
+          <div class="flex items-center gap-1 text-amber-500 mb-2">
+            <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+            <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+            <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+            <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+            <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+          </div>
+          <p class="text-sm text-slate-700 mb-4">"Having a real recruiter tailor my resume for ATS checkers and submit applications saved me over 20 hours a week. Got 4 interviews in 2 weeks!"</p>
+          <div class="font-bold text-sm text-slate-900">— Sarah M., Senior Product Designer</div>
+        </div>
+
+        <div class="p-5 border border-slate-200 bg-slate-50 rounded-none">
+          <div class="flex items-center gap-1 text-amber-500 mb-2">
+            <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+            <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+            <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+            <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+            <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+          </div>
+          <p class="text-sm text-slate-700 mb-4">"The 1-on-1 calls with my recruiter gave me complete transparency on where my applications went. Worth every penny of the $250 plan."</p>
+          <div class="font-bold text-sm text-slate-900">— David K., Software Engineer</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="bg-slate-900 text-slate-400 py-8 px-4 mt-auto">
+    <div class="max-w-4xl mx-auto text-center text-xs space-y-2">
+      <p>© 2026 PathWay Inc. All rights reserved.</p>
+      <p>We respect your privacy. Your information is strictly secure and never shared.</p>
+    </div>
+  </footer>
+
+  <script>
+    lucide.createIcons();
+
+    // ANALYTICS & LOGGING
+    let visits = parseInt(localStorage.getItem('pathway_visits') || '0') + 1;
+    localStorage.setItem('pathway_visits', visits);
+
+    const urlParams = new URLSearchParams(window.location.search);
+    const isIG = urlParams.get('utm_source') === 'instagram' || document.referrer.includes('instagram.com');
+    if (isIG) {
+      let igVisits = parseInt(localStorage.getItem('pathway_ig_visits') || '0') + 1;
+      localStorage.setItem('pathway_ig_visits', igVisits);
+    }
+
+    function handleWaitlistSubmit(e, source) {
+      e.preventDefault();
+      const input = e.target.querySelector('input[type="email"]');
+      const email = input.value.trim();
+      if (!email) return;
+
+      let emails = JSON.parse(localStorage.getItem('pathway_emails') || '[]');
+      emails.push({ email, source, date: new Date().toLocaleDateString() });
+      localStorage.setItem('pathway_emails', JSON.stringify(emails));
+
+      input.value = '';
+      if (source === 'popup') closeWelcomePopup();
+      document.getElementById('formFeedback').classList.remove('hidden');
+      alert("Thank you! You've been added to the waitlist.");
+    }
+
+    function closeWelcomePopup() {
+      document.getElementById('welcomePopup').classList.add('hidden');
+    }
+
+    function promptAdminAccess() {
+      const pin = prompt('Enter Admin Password:');
+      if (pin === '1234') {
+        renderAdminStats();
+        document.getElementById('adminModal').classList.remove('hidden');
+      } else if (pin !== null) {
+        alert('Incorrect Password');
+      }
+    }
+
+    function closeAdminModal() {
+      document.getElementById('adminModal').classList.add('hidden');
+    }
+
+    function renderAdminStats() {
+      const totalVisits = localStorage.getItem('pathway_visits') || '0';
+      const igVisits = localStorage.getItem('pathway_ig_visits') || '0';
+      const emails = JSON.parse(localStorage.getItem('pathway_emails') || '[]');
+
+      document.getElementById('adminVisits').textContent = totalVisits;
+      document.getElementById('adminIgVisits').textContent = igVisits;
+      document.getElementById('adminLeads').textContent = emails.length;
+      
+      const conv = totalVisits > 0 ? ((emails.length / totalVisits) * 100).toFixed(1) : 0;
+      document.getElementById('adminConv').textContent = conv + '%';
+
+      const listContainer = document.getElementById('emailList');
+      if (emails.length === 0) {
+        listContainer.textContent = 'No emails collected yet.';
+      } else {
+        listContainer.innerHTML = emails.map(e => `<div>${e.date} | ${e.email} (${e.source})</div>`).join('');
+      }
+    }
+
+    function exportEmailsCSV() {
+      const emails = JSON.parse(localStorage.getItem('pathway_emails') || '[]');
+      if (emails.length === 0) return alert('No emails to export.');
+      
+      let csv = 'Date,Email,Source\n' + emails.map(e => `"${e.date}","${e.email}","${e.source}"`).join('\n');
+      const blob = new Blob([csv], { type: 'text/csv' });
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = 'pathway_waitlist_emails.csv';
+      a.click();
+    }
+  </script>
+</body>
+</html>
